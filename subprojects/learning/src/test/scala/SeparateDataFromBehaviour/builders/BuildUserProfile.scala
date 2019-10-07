@@ -1,7 +1,7 @@
-package SeparateDataFromBehaviour.builders
+package learning.test.SeparateDataFromBehaviour.builders
 
-import SeparateDataFromBehaviour.domain.UserProfile
 import com.github.nscala_time.time.Imports.DateTime
+import learning.test.SeparateDataFromBehaviour.domain.UserProfile
 
 case class BuildUserProfile(
   firstname: String = Faker.text(),

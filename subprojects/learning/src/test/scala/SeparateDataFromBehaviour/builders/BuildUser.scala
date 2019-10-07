@@ -1,4 +1,6 @@
-package SeparateDataFromBehaviour.builders
+package learning.test.SeparateDataFromBehaviour.builders
+
+import learning.test.SeparateDataFromBehaviour.domain.{User, UserAccount, UserProfile}
 
 case class BuildUser(
   userProfile: UserProfile = BuildUserProfile().build(),

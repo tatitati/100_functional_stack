@@ -1,8 +1,10 @@
+package application
+
 import cats.data._
 import cats.effect._
 import cats.implicits._
 import domain.pet.Pet
-import infrastructure.pet.{PetDontExist, PetExist, PetRepository}
+import infrastructure.{PetDontExist, PetExist, PetRepository}
 
 class PetService(petRepository: PetRepository) {
 

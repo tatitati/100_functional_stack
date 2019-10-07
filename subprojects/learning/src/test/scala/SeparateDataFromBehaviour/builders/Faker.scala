@@ -1,4 +1,4 @@
-package SeparateDataFromBehaviour.builders
+package learning.test.SeparateDataFromBehaviour.builders
 
 import com.github.nscala_time.time.Imports.DateTime
 import scala.util.Random

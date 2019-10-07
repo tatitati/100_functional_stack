@@ -1,9 +1,11 @@
-import application.pet.PetService
+package application.test
+
+import application.PetService
 import cats.effect.IO
 import domain.order.OrderId
 import domain.pet.Pet
-import infrastructure.pet.{PetDontExist, PetExist, PetRepository}
-import infrastructure.test.pet.ResetCache
+import infrastructure.{PetDontExist, PetExist, PetRepository}
+import infrastructure.test.ResetCache
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 
 class PetServiceSpec extends FunSuite with BeforeAndAfterEach{

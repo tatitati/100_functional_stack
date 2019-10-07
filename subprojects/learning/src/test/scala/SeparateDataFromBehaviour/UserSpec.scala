@@ -1,7 +1,7 @@
 package learning.test.SeparateDataFromBehaviour
 
-import SeparateDataFromBehaviour.domain.UserId
-import learning.test.domain.builders.{BuildUser, BuildUserProfile}
+import learning.test.SeparateDataFromBehaviour.builders.{BuildUser, BuildUserProfile}
+import learning.test.SeparateDataFromBehaviour.domain.UserId
 import org.scalatest.FunSuite
 
 class UserSpec extends FunSuite {
