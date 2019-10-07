@@ -1,0 +1,5 @@
+package learning.test.SeparateDataFromBehaviour.domain
+
+sealed trait ErrorSettingSurrogateId
+final case object SurrogateIdAlreadySet extends ErrorSettingSurrogateId
+final case object SurrogateIdCannotSetToNone extends ErrorSettingSurrogateId
