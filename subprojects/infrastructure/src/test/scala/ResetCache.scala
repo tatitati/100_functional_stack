@@ -29,6 +29,7 @@ trait ResetCache extends FunSuite with CustomDbConnection {
     val insert1: ConnectionIO[Int] = sql"insert into pet(name, age, price) values('Bolt', 17, 172)".update.run
     val insert2: ConnectionIO[Int] = sql"insert into pet(name, age, price) values('Lassie', 10, 230)".update.run
 
+    // does it make sense this for{...}
     val aa: IO[Int] = for{
       _ <- drop.transact(xa)
       _ <- create.transact(xa)
