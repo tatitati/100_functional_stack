@@ -6,7 +6,6 @@ import doobie.implicits._
 import cats.implicits._
 import doobie._
 
-
 class InsertUpdateSpec extends FunSuite with CustomDbConnection {
 
   test("CREATE TABLE / DROP TABLE"){
@@ -21,10 +20,11 @@ class InsertUpdateSpec extends FunSuite with CustomDbConnection {
         age  SMALLINT
     )""".update.run
 
-    (drop, create)
-      .mapN(_ + _)
-      .transact(xa)
-      .unsafeRunSync
+    val result: Int = (drop, create)
+      .mapN(_ + _) // FRE
+      .transact(xa) // IO
+      .unsafeRunSync // INTEGER
+
   }
 
   test("INSERT"){

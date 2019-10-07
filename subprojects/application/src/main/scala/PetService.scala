@@ -10,7 +10,7 @@ class PetService(petRepository: PetRepository) {
 
   def create(pet: Pet): IO[Either[PetExist.type, Unit]] = {
     val exists: IO[Boolean] = petRepository.exist(pet.name)
-    val create: IO[Unit] = petRepository.create(pet)
+    val create: IO[Int] = petRepository.create(pet)
 
     val run: IO[Either[PetExist.type, Unit]] = exists.flatMap {
       case true => IO(PetExist.asLeft[Unit])

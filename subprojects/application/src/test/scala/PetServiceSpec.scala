@@ -8,13 +8,13 @@ import infrastructure.{PetDontExist, PetExist, PetRepository}
 import infrastructure.test.ResetCache
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 
-class PetServiceSpec extends FunSuite with BeforeAndAfterEach{
+class PetServiceSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
 
-  var repository = new PetRepository() with ResetCache
+  var repository = new PetRepository()
 
   override def afterEach() {
-    val reset:IO[Unit] = repository.reset()
-    reset.unsafeRunSync()
+    val resetDb:IO[Int] = reset()
+    resetDb.unsafeRunSync()
     repository = repository
   }
 
@@ -32,7 +32,6 @@ class PetServiceSpec extends FunSuite with BeforeAndAfterEach{
 
   test("service.find()") {
     val service = new PetService(repository)
-    println(repository.cache)
     val result1:IO[Option[Pet]] = service.find(Pet(OrderId("00001A"), "nonexisting", 23, 100))
     assert(None === result1.unsafeRunSync(), "Should be None")
 
