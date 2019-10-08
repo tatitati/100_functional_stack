@@ -14,14 +14,14 @@ class BuilderPetSpec extends FunSuite {
       val createPet: State[BuilderState, Pet] = for{
         _ <- BuilderPetOps.withAge(34)
         _ <- BuilderPetOps.withPrice(110)
-        _ <- BuilderPetOps.withOrderId(OrderId("update_order_id"))
+        _ <- BuilderPetOps.withSurrogateId(None)
         built <- BuilderPetOps.build()
       } yield built
 
       assert(
         (
-          BuilderState(OrderId("update_order_id"),34,"any name",110),
-          Pet(OrderId("update_order_id"),"any name",34,110)
+          BuilderState(None,34,"any name",110),
+          Pet(None,"any name",34,110)
         ) == createPet.run(any).value
       )
   }

@@ -89,10 +89,10 @@ class FakerSpec extends FunSuite {
     val createPet: State[Seed, BuilderState] = for {
       age <- nextIntPositive
       price <- nextIntPositive
-    } yield BuilderState(OrderId("any_id"), age, "any name", price)
+    } yield BuilderState(None, age, "any name", price)
 
     assert(
-      (Seed(3854786773771191933L), BuilderState(OrderId("any_id"),542183646,"any name",584218809))
+      (Seed(3854786773771191933L), BuilderState(None,542183646,"any name",584218809))
         === createPet.run(Seed(2323)).value
     )
   }

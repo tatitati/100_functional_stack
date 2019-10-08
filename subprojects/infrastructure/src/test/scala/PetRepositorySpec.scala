@@ -1,8 +1,6 @@
 package infrastructure.test
 
-import scala.util.Random
 import cats.effect.IO
-import domain.order.OrderId
 import domain.pet.Pet
 import infrastructure.PetRepository
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
@@ -17,20 +15,27 @@ class PetRepositorySpec extends FunSuite with BeforeAndAfterEach with ResetCache
   }
 
   test("repo.create()"){
-    val create: IO[Int] = repo.create(Pet(OrderId("doesntmatter"), "colmillo_blanco", 8, 2))
+    val create: IO[Int] = repo.create(Pet(None, "colmillo_blanco", 8, 2))
 
     assert(1 == create.unsafeRunSync())
   }
-//
-//  test("repo.findByName()") {
-//    // repo.findByName() ::
-//    val find1:IO[Option[Pet]] = repo.findByName("Bolt")
-//    val find2:IO[Option[Pet]] = repo.findByName("No existing")
-//
-//    assert(Some(Pet(OrderId("00001A"), "Bolt", 17, 172)) == find1.unsafeRunSync())
-//    assert(None == find2.unsafeRunSync())
-//  }
-//
+
+  test("repo.findByName()") {
+    val find1:IO[Option[Pet]] = repo.findByName("Bolt")
+    val find2:IO[Option[Pet]] = repo.findByName("No existing")
+
+    assert(Some(Pet(Some(1), "Bolt", 17, 172)) == find1.unsafeRunSync())
+    assert(None == find2.unsafeRunSync())
+  }
+
+  test("repo.exist()") {
+    val exist1:IO[Boolean] = repo.exist("Bolt")
+    val exist2:IO[Boolean] = repo.exist("wrrroongg")
+
+    assert(true == exist1.unsafeRunSync())
+    assert(false == exist2.unsafeRunSync())
+  }
+
 //  test("repo.list()") {
 //    val result:IO[List[Pet]] = repo.list()
 //
@@ -39,11 +44,8 @@ class PetRepositorySpec extends FunSuite with BeforeAndAfterEach with ResetCache
 //    )
 //  }
 //
-//  test("repo.exist()") {
-//    val exist:IO[Boolean] = repo.exist("Bolt")
-//
-//    assert(true == exist.unsafeRunSync())
-//  }
+
+
 //
 //  test("repo.update()") {
 //    val result:IO[Unit] = repo.updateAge(55, Pet(OrderId("00002"), "Bolt", 17, 33))

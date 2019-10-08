@@ -2,42 +2,54 @@ package infrastructure
 
 import cats.effect.IO
 import domain.pet.Pet
-import doobie.ConnectionIO
 import doobie.implicits._
 import infrastructue.CustomDbConnection
 
 class PetRepository extends CustomDbConnection{
 
   def create(pet: Pet): IO[Int] = {
-    sql"""insert into pet(name, age, price) values(${pet.name}, ${pet.age}, ${pet.price})"""
+    sql"""
+          insert into
+          pet(name, age, price)
+          values(${pet.name}, ${pet.age}, ${pet.price})
+      """
       .update
       .run
       .transact(xa)
   }
 
-  def findByName(name: String): IO[Option[Pet]] = ???
-//  {
-//    IO {
-//      cache.contains(name) match {
-//        case true => Some(cache(name))
-//        case false => None
-//      }
-//    }
-//  }
+  def findByName(name: String): IO[Option[Pet]] = {
+    sql"""
+          select *
+          from pet
+          where name = ${name}
+      """
+      .query[Pet]
+      .option
+      .transact(xa)
+  }
+
+  def exist(name: String): IO[Boolean] = {
+    sql"""
+            select *
+            from pet
+            where name = ${name}
+        """
+      .query[Pet]
+      .option
+      .transact(xa)
+      .map{
+        case None => false
+        case _ => true
+    }
+  }
 
   def list(): IO[List[Pet]] = ???
-//  {
-//    IO{
-//      cache.map(_._2).toList
-//    }
-//  }
-
-  def exist(name: String): IO[Boolean] = ???
-//  {
-//    IO{
-//      cache.contains(name)
-//    }
-//  }
+  //  {
+  //    IO{
+  //      cache.map(_._2).toList
+  //    }
+  //  }
 
   def updateAge(newage: Int, pet: Pet): IO[Unit] = ???
 //  {

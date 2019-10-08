@@ -7,7 +7,7 @@ import domain.test.{Faker, Seed}
 
 object BuilderPetOps {
 
-  case class BuilderState(orderId: OrderId, age: Int, name: String, price: Int)
+  case class BuilderState(surrogateId: Option[Long], age: Int, name: String, price: Int)
 
   def any(): State[Seed, BuilderState] = State { (seedLong:Seed) =>
     val randomInt: State[Seed, Int] = Faker.nextIntPositive()
@@ -15,7 +15,7 @@ object BuilderPetOps {
     val createPet: State[Seed, BuilderState] = for {
       age <- randomInt
       price <- randomInt
-    } yield BuilderState(OrderId("any_id"), age, "any name", price)
+    } yield BuilderState(None, age, "any name", price)
 
     createPet.run(seedLong).value
   }
@@ -34,14 +34,14 @@ object BuilderPetOps {
     builderPet.copy(name = withName)
   }
 
-  def withOrderId(withOrderId: OrderId): State[BuilderState, Unit] = State { builderPet:BuilderState =>
-    val builderWithOrderId = builderPet.copy(orderId = withOrderId)
+  def withSurrogateId(withSurrogateId: Option[Long]): State[BuilderState, Unit] = State { builderPet:BuilderState =>
+    val builderWithOrderId = builderPet.copy(surrogateId = withSurrogateId)
     State.set[BuilderState](builderWithOrderId).run(builderPet).value
   }
 
   def build(): State[BuilderState, Pet] = State{ builderState =>
     val built = Pet(
-      orderId = builderState.orderId,
+      surrogateId = builderState.surrogateId,
       age = builderState.age,
       name = builderState.name,
       price = builderState.price
