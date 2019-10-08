@@ -2,7 +2,7 @@ package domain.test
 
 import cats.data.State
 import domain.order.OrderId
-import domain.test.pet.BuilderPetOps.BuilderState
+import domain.test.pet.BuilderPet.BuilderState
 import org.scalatest.FunSuite
 
 class FakerSpec extends FunSuite {

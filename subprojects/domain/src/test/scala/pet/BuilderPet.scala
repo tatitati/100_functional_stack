@@ -5,7 +5,7 @@ import domain.order.OrderId
 import domain.pet.Pet
 import domain.test.{Faker, Seed}
 
-object BuilderPetOps {
+object BuilderPet {
 
   case class BuilderState(surrogateId: Option[Long], age: Int, name: String, price: Int)
 
