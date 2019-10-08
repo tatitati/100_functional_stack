@@ -1,5 +1,6 @@
 package infrastructure
 
+import cats.data.OptionT
 import cats.effect.IO
 import domain.pet.Pet
 import doobie.implicits._
@@ -8,10 +9,12 @@ import infrastructue.CustomDbConnection
 class PetRepository extends CustomDbConnection{
 
   def create(pet: Pet): IO[Int] = {
+    val petPersistent = MapperPet.toPersistent(pet)
+
     sql"""
           insert into
           pet(name, age, price)
-          values(${pet.name}, ${pet.age}, ${pet.price})
+          values(${petPersistent.name}, ${petPersistent.age}, ${petPersistent.price})
       """
       .update
       .run
@@ -19,21 +22,25 @@ class PetRepository extends CustomDbConnection{
   }
 
   def findByName(name: String): IO[Option[Pet]] = {
-    sql"""
+      val result: IO[Option[PetPersistent]] = sql"""
           select *
           from pet
           where name = ${name}
       """
-      .query[Pet]
+      .query[PetPersistent]
       .option
       .transact(xa)
+
+      OptionT(result).map(
+        MapperPet.toDomain(_)
+      ).value
   }
 
   def exist(name: String): IO[Boolean] = {
     sql"""
-            select *
-            from pet
-            where name = ${name}
+          select *
+          from pet
+          where name = ${name}
         """
       .query[Pet]
       .option
