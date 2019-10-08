@@ -3,8 +3,9 @@ package infrastructure
 import cats.data.OptionT
 import cats.effect.IO
 import domain.pet.Pet
-import doobie.implicits._
 import infrastructue.CustomDbConnection
+import doobie.implicits._
+import cats.implicits._
 
 class PetRepository extends CustomDbConnection{
 
@@ -31,9 +32,11 @@ class PetRepository extends CustomDbConnection{
       .option
       .transact(xa)
 
-      OptionT(result).map(
-        MapperPet.toDomain(_)
-      ).value
+      result.map{ x => x match {
+        case None => None
+        case _ => Some(MapperPet.toDomain(x.get))
+        }
+      }
   }
 
   def exist(name: String): IO[Boolean] = {

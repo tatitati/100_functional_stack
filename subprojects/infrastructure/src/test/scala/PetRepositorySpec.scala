@@ -1,9 +1,12 @@
 package infrastructure.test
 
+import cats.data.OptionT
 import cats.effect.IO
 import domain.pet.Pet
-import infrastructure.PetRepository
+import infrastructure.{MapperPet, PetPersistent, PetRepository}
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
+import infrastructue.CustomDbConnection
+import doobie.implicits._
 
 class PetRepositorySpec extends FunSuite with BeforeAndAfterEach with ResetCache {
 
