@@ -23,7 +23,5 @@ class ParameterizeQueriesSpec extends FunSuite with CustomDbConnection {
       List(Country("FR","France",650,Some(7.0)))
       == result
     )
-
   }
-
 }

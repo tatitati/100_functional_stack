@@ -78,6 +78,8 @@ class SelectingDataSpec extends FunSuite with CustomDbConnection {
   test("Can specify in which format to return the results: in case classes") {
     case class Country(code: String, name: String, pop: Int, gnp: Option[Double])
 
+    // this produces the same
+    // val result = sql"select * from country"
     val result = sql"select code, name, population, gnp from country"
       .query[Country]
       .stream
@@ -93,5 +95,40 @@ class SelectingDataSpec extends FunSuite with CustomDbConnection {
         Country("FR","France",650,Some(7.0))
       ) == result
     )
+  }
+
+  test("Can return Option[Country] using WHERE]"){
+    case class Country(code: String, name: String, pop: Int, gnp: Option[Double])
+
+    val result = sql"""
+      select code, name, population, gnp
+      from country
+      where code = 'IT'
+      """
+      .query[Country]
+      .option
+      .transact(xa)
+      .unsafeRunSync
+
+    assert(
+      Some(Country("IT","italy",600,Some(3.0)))
+        == result
+    )
+  }
+
+  test("Can return NONE using WHERE]"){
+    case class Country(code: String, name: String, pop: Int, gnp: Option[Double])
+
+    val result = sql"""
+      select code, name, population, gnp
+      from country
+      where code = 'WRONGGGG'
+      """
+      .query[Country]
+      .option
+      .transact(xa)
+      .unsafeRunSync
+
+    assert(None == result)
   }
 }
