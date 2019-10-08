@@ -9,7 +9,7 @@ import org.scalatest.FunSuite
 
 class BuilderPetSpec extends FunSuite {
   test("I can use Monad State to use pet builder") {
-      val (_, any) = BuilderPet.any().run(Seed(100)).value
+      val (seed, anyBuilderState) = BuilderPet.any().run(Seed(100)).value
 
       val createPet: State[BuilderState, Pet] = for{
         _ <- BuilderPet.withAge(34)
@@ -23,7 +23,7 @@ class BuilderPetSpec extends FunSuite {
           BuilderState(None,34,"any name",110),
           Pet(None,"any name",34,110)
         )
-          == createPet.run(any).value
+          == createPet.run(anyBuilderState).value
       )
   }
 }
