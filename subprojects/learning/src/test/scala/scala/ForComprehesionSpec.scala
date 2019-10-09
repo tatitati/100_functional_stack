@@ -86,26 +86,25 @@ class ForComprehesionSpec extends FunSuite{
     assert(Vector(3, 4, 6, 8) === z)
   }
 
-  test("Babylong experiment"){
+  test("Babylon experiment"){
     def filterBySubstring(substring: String, words: List[String]): String = {
       words.filter(_.contains(substring)).head
     }
 
     val givenWords = List("exgirlfriend", "queue", "jmeter", "buff", "fuzzy", "coco", "wonderland", "butt", "and", "no", "none", "yes", "ever", "and", "bye", "whatever", "but", "where", "turkey", "lamp", "zapping")
-    val givenSubstrings: List[String] = ('a' to 'd').toList.map(_.toString)
+    val givenSubstrings: List[String] = List("an", "er")
 
     val result1: List[String] = for{
       givenSubstring <- givenSubstrings // substring: String
       matches = filterBySubstring(givenSubstring, givenWords) // matches: String
     } yield matches
 
-    assert(List("wonderland", "buff", "coco", "exgirlfriend") == result1)
-
     val result2: List[Char] = for{
       givenSubstring <- givenSubstrings // substring: String
-      matches <- filterBySubstring(givenSubstring, givenWords) // matches: Char
+      matches <- filterBySubstring(givenSubstring, givenWords) // matches: Char. Note: String is treated as a collection, so it provides Chars
     } yield matches
 
-    assert(List('w', 'o', 'n', 'd', 'e', 'r', 'l', 'a', 'n', 'd', 'b', 'u', 'f', 'f', 'c', 'o', 'c', 'o', 'e', 'x', 'g', 'i', 'r', 'l', 'f', 'r', 'i', 'e', 'n', 'd') == result2)
+    assert(List("wonderland", "jmeter") == result1, "result1 failed")
+    assert( List('w', 'o', 'n', 'd', 'e', 'r', 'l', 'a', 'n', 'd', 'j', 'm', 'e', 't', 'e', 'r') == result2, "result2 failed")
   }
 }
