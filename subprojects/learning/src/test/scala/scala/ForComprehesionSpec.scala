@@ -59,7 +59,7 @@ class ForComprehesionSpec extends FunSuite{
     assert(Some(5) === z)
   }
 
-  test("how to do a+b if some is not valid?") {
+  test("None makes the for to quit") {
     val z = for {
       a <- Some(2)
       b <- None
@@ -87,6 +87,7 @@ class ForComprehesionSpec extends FunSuite{
   }
 
   test("Babylon experiment"){
+
     def filterBySubstring(substring: String, words: List[String]): String = {
       words.filter(_.contains(substring)).head
     }
@@ -96,6 +97,7 @@ class ForComprehesionSpec extends FunSuite{
 
     val result1: List[String] = for{
       givenSubstring <- givenSubstrings // givenSubstring: String
+      _ = println(givenSubstring)
       matchedWord = filterBySubstring(givenSubstring, givenWords) // matchedWord: String
     } yield matchedWord
 
@@ -107,4 +109,21 @@ class ForComprehesionSpec extends FunSuite{
     assert(List("wonderland", "jmeter") == result1, "result1 failed")
     assert( List('w', 'o', 'n', 'd', 'e', 'r', 'l', 'a', 'n', 'd', 'j', 'm', 'e', 't', 'e', 'r') == result2, "result2 failed")
   }
+
+  test("with Persons"){
+    case class Person(name: String, age: Int)
+
+    val persons: List[Person] = List(
+      Person("john", 23),
+      Person("daniel", 45),
+      Person("hulk", 102)
+    )
+
+    val names: List[String] = for{
+      person <- persons
+    } yield person.name
+
+    assert(List("john", "daniel", "hulk") == names)
+  }
+
 }
