@@ -32,10 +32,9 @@ class PetRepository extends CustomDbConnection{
       .option
       .transact(xa)
 
-      result.map{ x => x match {
+      result.map{
         case Some(value) => Some(MapperPet.toDomain(value))
         case None => None
-        }
       }
   }
 

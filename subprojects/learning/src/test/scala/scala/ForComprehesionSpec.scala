@@ -2,6 +2,8 @@ package learning.test.scala
 
 import org.scalatest.FunSuite
 
+import scala.collection.mutable.ArrayBuffer
+
 class ForComprehesionSpec extends FunSuite{
 
   test("simple for compressions can be equivalent to map()") {
@@ -124,6 +126,37 @@ class ForComprehesionSpec extends FunSuite{
     } yield person.name
 
     assert(List("john", "daniel", "hulk") == names)
+  }
+
+  test("two iterators must be same time?"){
+    case class Person(name: String, age: Int)
+    case class Animal(name: String, age: Int)
+
+    val persons: List[Person] = List(
+      Person("john", 23),
+      Person("daniel", 45),
+      Person("hulk", 102)
+    )
+
+    val animals: ArrayBuffer[Animal] = ArrayBuffer(
+      Animal("animal1", 23),
+      Animal("animal2", 45)
+    )
+
+    val names1: ArrayBuffer[String] = for{
+      animal <- animals // ArrayBuffer[Animal]
+      person <- persons // List[Person]
+    } yield person.name + animal.name
+
+    val names2: List[String] = for{
+      person <- persons // List[Person]
+      animal <- animals // ArrayBuffer[Animal]
+    } yield person.name + animal.name
+
+    assert(ArrayBuffer("johnanimal1", "danielanimal1", "hulkanimal1", "johnanimal2", "danielanimal2", "hulkanimal2") == names1)
+    assert(List("johnanimal1", "johnanimal2", "danielanimal1", "danielanimal2", "hulkanimal1", "hulkanimal2") == names2)
+
+
   }
 
 }
