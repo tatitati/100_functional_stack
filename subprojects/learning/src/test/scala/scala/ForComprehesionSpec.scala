@@ -86,7 +86,7 @@ class ForComprehesionSpec extends FunSuite{
     assert(Vector(3, 4, 6, 8) === z)
   }
 
-  test("Babylon experiment"){
+  test("Be careful with Strings, in fors they act like collection of chars"){
 
     def filterBySubstring(substring: String, words: List[String]): String = {
       words.filter(_.contains(substring)).head
@@ -110,7 +110,7 @@ class ForComprehesionSpec extends FunSuite{
     assert( List('w', 'o', 'n', 'd', 'e', 'r', 'l', 'a', 'n', 'd', 'j', 'm', 'e', 't', 'e', 'r') == result2, "result2 failed")
   }
 
-  test("with Persons"){
+  test("I can start with a List[Person] and finish with a List[String]"){
     case class Person(name: String, age: Int)
 
     val persons: List[Person] = List(
