@@ -95,14 +95,14 @@ class ForComprehesionSpec extends FunSuite{
     val givenSubstrings: List[String] = List("an", "er")
 
     val result1: List[String] = for{
-      givenSubstring <- givenSubstrings // substring: String
-      matches = filterBySubstring(givenSubstring, givenWords) // matches: String
-    } yield matches
+      givenSubstring <- givenSubstrings // givenSubstring: String
+      matchedWord = filterBySubstring(givenSubstring, givenWords) // matchedWord: String
+    } yield matchedWord
 
     val result2: List[Char] = for{
-      givenSubstring <- givenSubstrings // substring: String
-      matches <- filterBySubstring(givenSubstring, givenWords) // matches: Char. Note: String is treated as a collection, so it provides Chars
-    } yield matches
+      givenSubstring <- givenSubstrings // givenSubstring: String
+      charsOfMatchedWord <- filterBySubstring(givenSubstring, givenWords) // charsOfMatchedWord: Char. Note: String is treated as a collection, so it provides Chars
+    } yield charsOfMatchedWord
 
     assert(List("wonderland", "jmeter") == result1, "result1 failed")
     assert( List('w', 'o', 'n', 'd', 'e', 'r', 'l', 'a', 'n', 'd', 'j', 'm', 'e', 't', 'e', 'r') == result2, "result2 failed")
