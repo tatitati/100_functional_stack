@@ -85,4 +85,27 @@ class ForComprehesionSpec extends FunSuite{
     assert(Vector(3, 4, 6, 8) === w)
     assert(Vector(3, 4, 6, 8) === z)
   }
+
+  test("Babylong experiment"){
+    def filterBySubstring(substring: String, words: List[String]): String = {
+      words.filter(_.contains(substring)).head
+    }
+
+    val givenWords = List("exgirlfriend", "queue", "jmeter", "buff", "fuzzy", "coco", "wonderland", "butt", "and", "no", "none", "yes", "ever", "and", "bye", "whatever", "but", "where", "turkey", "lamp", "zapping")
+    val givenSubstrings: List[String] = ('a' to 'd').toList.map(_.toString)
+
+    val result1: List[String] = for{
+      givenSubstring <- givenSubstrings // substring: String
+      matches = filterBySubstring(givenSubstring, givenWords) // matches: String
+    } yield matches
+
+    assert(List("wonderland", "buff", "coco", "exgirlfriend") == result1)
+
+    val result2: List[Char] = for{
+      givenSubstring <- givenSubstrings // substring: String
+      matches <- filterBySubstring(givenSubstring, givenWords) // matches: Char
+    } yield matches
+
+    assert(List('w', 'o', 'n', 'd', 'e', 'r', 'l', 'a', 'n', 'd', 'b', 'u', 'f', 'f', 'c', 'o', 'c', 'o', 'e', 'x', 'g', 'i', 'r', 'l', 'f', 'r', 'i', 'e', 'n', 'd') == result2)
+  }
 }
