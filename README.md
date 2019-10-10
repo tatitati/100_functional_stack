@@ -1,6 +1,8 @@
 # TODOs:
 
 - [x] ~Create database~
+- [x] ~Add http4s~
+- [x] ~Add doobie~
 - [x] ~Add mappers repository~
 - [x] ~Finish repository~
 - [x] ~Focus on applicaiton service~
