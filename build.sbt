@@ -92,6 +92,7 @@ lazy val ui = (project in file("subprojects/ui"))
 
 lazy val root = (project in file("."))
   .aggregate(learning, domain, infrastructure, application, ui)
+  .dependsOn(learning, domain, infrastructure, application, ui)
   .settings(
     commonsSettings,
     libraryDependencies ++= thirdDependencies,

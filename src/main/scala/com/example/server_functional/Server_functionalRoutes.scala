@@ -10,6 +10,7 @@ object Server_functionalRoutes {
   def jokeRoutes[F[_]: Sync](J: Jokes[F]): HttpRoutes[F] = {
     val dsl = new Http4sDsl[F]{}
     import dsl._
+
     HttpRoutes.of[F] {
       case GET -> Root / "joke" =>
         for {
@@ -22,6 +23,7 @@ object Server_functionalRoutes {
   def helloWorldRoutes[F[_]: Sync](H: HelloWorld[F]): HttpRoutes[F] = {
     val dsl = new Http4sDsl[F]{}
     import dsl._
+
     HttpRoutes.of[F] {
       case GET -> Root / "hello" / name =>
         for {

@@ -4,9 +4,9 @@ import cats.data._
 import cats.effect._
 import cats.implicits._
 import domain.pet.Pet
-import infrastructure.{PetDontExist, PetExist, PetRepository}
+import infrastructure.{PetDontExist, PetExist, RepositoryPet}
 
-class PetService(petRepository: PetRepository) {
+class ServicePet(petRepository: RepositoryPet) {
 
   def create(pet: Pet): IO[Either[PetExist.type, Unit]] = {
     val exists: IO[Boolean] = petRepository.exist(pet.name)

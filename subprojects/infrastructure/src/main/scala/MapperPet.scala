@@ -3,7 +3,7 @@ package infrastructure
 import domain.pet.Pet
 
 object MapperPet {
-  def toDomain(persistent: PetPersistent): Pet = {
+  def toDomain(persistent: PersistentPet): Pet = {
     Pet(
       persistent.orderId,
       persistent.name,
@@ -12,8 +12,8 @@ object MapperPet {
     )
   }
 
-  def toPersistent(pet: Pet): PetPersistent = {
-    PetPersistent(
+  def toPersistent(pet: Pet): PersistentPet = {
+    PersistentPet(
       pet.surrogateId,
       pet.name,
       pet.age,

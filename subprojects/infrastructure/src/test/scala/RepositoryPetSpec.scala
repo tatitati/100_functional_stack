@@ -3,14 +3,14 @@ package infrastructure.test
 import cats.data.OptionT
 import cats.effect.IO
 import domain.pet.Pet
-import infrastructure.{MapperPet, PetPersistent, PetRepository}
+import infrastructure.{MapperPet, PersistentPet, RepositoryPet}
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 import infrastructue.CustomDbConnection
 import doobie.implicits._
 
-class PetRepositorySpec extends FunSuite with BeforeAndAfterEach with ResetCache {
+class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
 
-  val repo = new PetRepository()
+  val repo = new RepositoryPet()
 
   override def beforeEach() {
     val resetDb:IO[Int] = reset()

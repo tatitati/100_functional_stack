@@ -5,7 +5,7 @@ import domain.pet.Pet
 import domain.test.Seed
 import domain.test.pet.BuilderPet
 import domain.test.pet.BuilderPet.BuilderState
-import infrastructure.{MapperPet, PetPersistent}
+import infrastructure.{MapperPet, PersistentPet}
 import org.scalatest.FunSuite
 
 class MapperPetSpec extends FunSuite {
@@ -23,7 +23,7 @@ class MapperPetSpec extends FunSuite {
     val builtPet = createPet.runA(anyBuilderState).value
     val persistent = MapperPet.toPersistent(builtPet)
 
-    assert(PetPersistent(None,"any name",34,110) == persistent)
+    assert(PersistentPet(None,"any name",34,110) == persistent)
   }
 
 //  test("MapperPet.toPersistence()") {

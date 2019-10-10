@@ -1,17 +1,17 @@
 package application.test
 
-import application.PetService
+import application.ServicePet
 import cats.effect.IO
 import domain.order.OrderId
 import domain.pet.Pet
-import infrastructure.{PetDontExist, PetExist, PetRepository}
+import infrastructure.{PetDontExist, PetExist, RepositoryPet}
 import infrastructure.test.ResetCache
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 
-class PetServiceSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
+class ServicePetSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
 
-  var repository = new PetRepository()
-  val service = new PetService(repository)
+  var repository = new RepositoryPet()
+  val service = new ServicePet(repository)
 
   override def afterEach() {
     val resetDb:IO[Int] = reset()

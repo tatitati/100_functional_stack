@@ -4,7 +4,7 @@ import cats.effect._
 import domain.order.OrderId
 import domain.pet.Pet
 import doobie.ConnectionIO
-import infrastructure.PetRepository
+import infrastructure.RepositoryPet
 import doobie.implicits._
 import cats.implicits._
 import doobie._

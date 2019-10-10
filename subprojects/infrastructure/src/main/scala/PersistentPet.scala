@@ -1,6 +1,6 @@
 package infrastructure
 
-case class PetPersistent(
+case class PersistentPet(
                           orderId: Option[Long],
                           name: String,
                           age: Int,

@@ -7,7 +7,7 @@ import infrastructue.CustomDbConnection
 import doobie.implicits._
 import cats.implicits._
 
-class PetRepository extends CustomDbConnection{
+class RepositoryPet extends CustomDbConnection{
 
   def create(pet: Pet): IO[Int] = {
     val petPersistent = MapperPet.toPersistent(pet)
@@ -23,12 +23,12 @@ class PetRepository extends CustomDbConnection{
   }
 
   def findByName(name: String): IO[Option[Pet]] = {
-      val result: IO[Option[PetPersistent]] = sql"""
+      val result: IO[Option[PersistentPet]] = sql"""
           select *
           from pet
           where name = ${name}
       """
-      .query[PetPersistent]
+      .query[PersistentPet]
       .option
       .transact(xa)
 
