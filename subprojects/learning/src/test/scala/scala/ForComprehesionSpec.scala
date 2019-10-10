@@ -6,6 +6,9 @@ import scala.collection.mutable.ArrayBuffer
 
 class ForComprehesionSpec extends FunSuite{
 
+  case class Person(name: String, age: Int)
+  case class Animal(name: String, age: Int)
+
   test("simple for compressions can be equivalent to map()") {
     val z = for {
       i <- List(1,2,3)
@@ -113,13 +116,7 @@ class ForComprehesionSpec extends FunSuite{
   }
 
   test("I can start with a List[Person] and finish with a List[String]"){
-    case class Person(name: String, age: Int)
-
-    val persons: List[Person] = List(
-      Person("john", 23),
-      Person("daniel", 45),
-      Person("hulk", 102)
-    )
+    val persons: List[Person] = List(Person("john", 23), Person("daniel", 45), Person("hulk", 102))
 
     val names: List[String] = for{
       person <- persons
@@ -128,35 +125,22 @@ class ForComprehesionSpec extends FunSuite{
     assert(List("john", "daniel", "hulk") == names)
   }
 
-  test("two iterators must be same time?"){
-    case class Person(name: String, age: Int)
-    case class Animal(name: String, age: Int)
-
-    val persons: List[Person] = List(
-      Person("john", 23),
-      Person("daniel", 45),
-      Person("hulk", 102)
-    )
-
-    val animals: ArrayBuffer[Animal] = ArrayBuffer(
-      Animal("animal1", 23),
-      Animal("animal2", 45)
-    )
+  test("The order of the loops matter. The resulting container type is the same as the first iterator"){
+    val persons: List[Person] = List(Person("john", 23), Person("daniel", 45), Person("hulk", 102))
+    val animals: ArrayBuffer[Animal] = ArrayBuffer(Animal("animal1", 23), Animal("animal2", 45))
 
     val names1: ArrayBuffer[String] = for{
-      animal <- animals // ArrayBuffer[Animal]
+      animal <- animals // animals: ArrayBuffer[Animal]
       person <- persons // List[Person]
     } yield person.name + animal.name
 
     val names2: List[String] = for{
-      person <- persons // List[Person]
+      person <- persons //perso: List[Person]
       animal <- animals // ArrayBuffer[Animal]
     } yield person.name + animal.name
 
     assert(ArrayBuffer("johnanimal1", "danielanimal1", "hulkanimal1", "johnanimal2", "danielanimal2", "hulkanimal2") == names1)
     assert(List("johnanimal1", "johnanimal2", "danielanimal1", "danielanimal2", "hulkanimal1", "hulkanimal2") == names2)
-
-
   }
 
 }
