@@ -1,4 +1,4 @@
-# TODOs:
+## Todo:
 
 - [x] ~Create database~
 - [x] ~Add http4s~
