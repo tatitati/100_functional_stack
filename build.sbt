@@ -10,16 +10,18 @@ organization := "com.example"
 name := "server_functional"
 
 val thirdDependencies = Seq(
-    "org.http4s"      %% "http4s-blaze-server" % Http4sVersion,
-    "org.http4s"      %% "http4s-blaze-client" % Http4sVersion,
-    "org.http4s"      %% "http4s-circe"        % Http4sVersion,
-    "org.http4s"      %% "http4s-dsl"          % Http4sVersion,
     "io.circe"        %% "circe-generic"       % CirceVersion,
     "org.specs2"      %% "specs2-core"         % Specs2Version % "test",
     "ch.qos.logback"  %  "logback-classic"     % LogbackVersion,
 
     scalaTest % Test,
     "com.github.nscala-time" %% "nscala-time" % "2.22.0",
+
+    // http4s
+    "org.http4s"      %% "http4s-blaze-server" % Http4sVersion,
+    "org.http4s"      %% "http4s-blaze-client" % Http4sVersion,
+    "org.http4s"      %% "http4s-circe"        % Http4sVersion,
+    "org.http4s"      %% "http4s-dsl"          % Http4sVersion,
 
     //  Cats
     "org.typelevel" %% "cats-core" % "2.0.0-M4",

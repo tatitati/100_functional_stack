@@ -24,28 +24,28 @@ class PetService(petRepository: PetRepository) {
     petRepository.findByName(pet.name)
   }
 
-  def list: IO[List[Pet]] = {
-    petRepository.list()
-  }
+//  def list: IO[List[Pet]] = {
+//    petRepository.list()
+//  }
 
-  def update(newage: Int, pet: Pet): IO[Either[PetDontExist.type, Unit]] = {
-    val exist: IO[Boolean] = petRepository.exist(pet.name)
-    val update: IO[Unit] = petRepository.updateAge(newage, pet)
-
-    val run: IO[Either[PetDontExist.type, Unit]] = exist.flatMap{
-      // I can do
-      // update.map(_ => ().asRight[PetDontExist.type])
-      // Right(Unit))
-      case true => update.map(_ => Right(Unit))
-      // I can do:
-      // PetDontExist.asLeft[Unit].pure[IO]
-      // IO{PetDontExist.asLeft[Unit]}
-      // IO(PetDontExist.asLeft[Unit])
-      // IO(Left(PetDontExist.asLeft[Unit])
-      // IO(Left(PetDontExist))
-      case false => IO(Left(PetDontExist))
-    }
-
-    run
-  }
+//  def update(newage: Int, pet: Pet): IO[Either[PetDontExist.type, Unit]] = {
+//    val exist: IO[Boolean] = petRepository.exist(pet.name)
+//    val update: IO[Unit] = petRepository.updateAge(newage, pet)
+//
+//    val run: IO[Either[PetDontExist.type, Unit]] = exist.flatMap{
+//      // I can do
+//      // update.map(_ => ().asRight[PetDontExist.type])
+//      // Right(Unit))
+//      case true => update.map(_ => Right(Unit))
+//      // I can do:
+//      // PetDontExist.asLeft[Unit].pure[IO]
+//      // IO{PetDontExist.asLeft[Unit]}
+//      // IO(PetDontExist.asLeft[Unit])
+//      // IO(Left(PetDontExist.asLeft[Unit])
+//      // IO(Left(PetDontExist))
+//      case false => IO(Left(PetDontExist))
+//    }
+//
+//    run
+//  }
 }
