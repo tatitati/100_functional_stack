@@ -16,7 +16,8 @@ class ForComprehesionSpec extends FunSuite{
     assert(z.isInstanceOf[List[Int]])
 
     // the previous asserts is because scala in collections only compare the items inside, but no the type of the collection
-    assert(List(2, 4, 6) == Vector(2, 4, 6))
+    assert(List(2, 4, 6) == ArrayBuffer(2, 4, 6))
+    assert(ArrayBuffer(2, 4, 6) == Vector(2, 4, 6))
 
     assert(List(2, 4, 6) == z)
     assert(List(2, 4, 6) === (1 to 3).map(_ * 2))
