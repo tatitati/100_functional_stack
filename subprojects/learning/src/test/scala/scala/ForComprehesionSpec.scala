@@ -1,7 +1,6 @@
 package learning.test.scala
 
 import org.scalatest.FunSuite
-
 import scala.collection.mutable.ArrayBuffer
 
 class ForComprehesionSpec extends FunSuite{
@@ -10,12 +9,17 @@ class ForComprehesionSpec extends FunSuite{
   case class Animal(name: String, age: Int)
 
   test("simple for compressions can be equivalent to map()") {
-    val z = for {
+    val z: List[Int] = for {
       i <- List(1,2,3)
     } yield i * 2
 
-    assert(Vector(2, 4, 6) === z)
-    assert(Vector(2, 4, 6) === (1 to 3).map(_ * 2))
+    assert(z.isInstanceOf[List[Int]])
+
+    // the previous asserts is because scala in collections only compare the items inside, but no the type of the collection
+    assert(List(2, 4, 6) == Vector(2, 4, 6))
+
+    assert(List(2, 4, 6) == z)
+    assert(List(2, 4, 6) === (1 to 3).map(_ * 2))
   }
 
   test("complex For comprehension can be translated to flatMap()") {
