@@ -83,6 +83,15 @@ lazy val learning = (project in file("subprojects/learning"))
     libraryDependencies ++= thirdDependencies
   )
 
+lazy val ui = (project in file("subprojects/ui"))
+  .aggregate(learning, domain, infrastructure, application)
+  .settings(
+    commonsSettings,
+    libraryDependencies ++= thirdDependencies,
+    addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.10.3"),
+    addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.0")
+  )
+
 lazy val root = (project in file("."))
   .aggregate(learning, domain, infrastructure, application)
   .settings(
