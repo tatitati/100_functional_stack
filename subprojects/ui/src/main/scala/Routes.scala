@@ -1,33 +1,30 @@
 package ui
 
-import cats.effect.Sync
+import cats.effect._
 import cats.implicits._
 import org.http4s.HttpRoutes
-import org.http4s.dsl.Http4sDsl
+import org.http4s.syntax._
+import org.http4s.dsl.io._
+import org.http4s.implicits._
+import org.http4s.server.blaze._
 
-object Server_functionalRoutes {
+import scala.concurrent.ExecutionContext.Implicits.global
 
-  def jokeRoutes[F[_]: Sync](J: Jokes[F]): HttpRoutes[F] = {
-    val dsl = new Http4sDsl[F]{}
-    import dsl._
-    HttpRoutes.of[F] {
-      case GET -> Root / "joke" =>
-        for {
-          joke <- J.get
-          resp <- Ok(joke)
-        } yield resp
-    }
-  }
+object Controllers extends IOApp {
 
-  def helloWorldRoutes[F[_]: Sync](H: HelloWorld[F]): HttpRoutes[F] = {
-    val dsl = new Http4sDsl[F]{}
-    import dsl._
-    HttpRoutes.of[F] {
-      case GET -> Root / "hello" / name =>
-        for {
-          greeting <- H.hello(HelloWorld.Name(name))
-          resp <- Ok(greeting)
-        } yield resp
-    }
-  }
+
+  val helloWorldService = HttpRoutes.of[IO] {
+    case GET -> Root / "hello" / name =>
+      Ok(s"Hello, $name.")
+  }.orNotFound
+
+  def run(args: List[String]): IO[ExitCode] =
+    BlazeServerBuilder[IO]
+      .bindHttp(8080, "localhost")
+      .withHttpApp(helloWorldService)
+      .serve
+      .compile
+      .drain
+      .as(ExitCode.Success)
+
 }
