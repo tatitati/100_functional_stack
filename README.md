@@ -1,10 +1,13 @@
-# TODOs:
+## Todo:
 
 - [x] ~Create database~
+- [x] ~Add http4s~
+- [x] ~Add doobie~
 - [x] ~Add mappers repository~
-- [ ] Finish repository
-- [ ] Focus on applicaiton service
-- [ ] Go to controllers
+- [x] ~Finish repository~
+- [x] ~Focus on applicaiton service~
+- [ ] Go to controllers :fire:
+- [ ] Focus on Circe, needed to respond from controllers :fire::fire:
 - [ ] Configuration HTTP4s
 
 
