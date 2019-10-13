@@ -1,7 +1,6 @@
 package learning.test.scala
 
 import org.scalatest.FunSuite
-
 import scala.collection.mutable.ArrayBuffer
 import scala.util.{Success, Try}
 
@@ -15,14 +14,8 @@ class ForComprehesionSpec extends FunSuite{
       i <- List(1,2,3)
     } yield i * 2
 
-    assert(z.isInstanceOf[List[Int]])
-
-    // the previous asserts is because scala in collections only compare the items inside, but no the type of the collection
-    assert(List(2, 4, 6) == ArrayBuffer(2, 4, 6))
-    assert(ArrayBuffer(2, 4, 6) == Vector(2, 4, 6))
-
-    assert(List(2, 4, 6) == z)
-    assert(List(2, 4, 6) === (1 to 3).map(_ * 2))
+    assert(List(2, 4, 6) == z, "result with for")
+    assert(List(2, 4, 6) === (1 to 3).map(_ * 2), "result using map is the same than the previous (with for)")
   }
 
   test("complex For comprehension can be translated to flatMap()") {
