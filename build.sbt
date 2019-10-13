@@ -76,6 +76,13 @@ lazy val application = (project in file("subprojects/application"))
     libraryDependencies ++= thirdDependencies
   )
 
+lazy val ui = (project in file("subprojects/ui"))
+  .dependsOn(learning, domain, infrastructure, application)
+  .settings(
+    commonsSettings,
+    libraryDependencies ++= thirdDependencies
+  )
+
 lazy val learning = (project in file("subprojects/learning"))
   .settings(
     name := "learning subproject",
@@ -83,16 +90,11 @@ lazy val learning = (project in file("subprojects/learning"))
     libraryDependencies ++= thirdDependencies
   )
 
-lazy val ui = (project in file("subprojects/ui"))
-  .aggregate(learning, domain, infrastructure, application)
-  .settings(
-    commonsSettings,
-    libraryDependencies ++= thirdDependencies
-  )
+
 
 lazy val root = (project in file("."))
   .aggregate(learning, domain, infrastructure, application, ui)
-  .dependsOn(learning, domain, infrastructure, application, ui)
+  .dependsOn(domain, infrastructure, application, ui)
   .settings(
     commonsSettings,
     libraryDependencies ++= thirdDependencies,

@@ -1,7 +1,9 @@
 package learning.test.scala
 
 import org.scalatest.FunSuite
+
 import scala.collection.mutable.ArrayBuffer
+import scala.util.{Success, Try}
 
 class ForComprehesionSpec extends FunSuite{
 
@@ -148,4 +150,12 @@ class ForComprehesionSpec extends FunSuite{
     assert(List("johnanimal1", "johnanimal2", "danielanimal1", "danielanimal2", "hulkanimal1", "hulkanimal2") == names2)
   }
 
+  test("container types must be the same") {
+    val result: Option[Try[String]] = for {
+      a <- Option("whatever")
+      b <- Option(Try(a)) // Because I start with Option, I need options in the rest
+    } yield(b)
+
+    assert(Some(Success("whatever")) == result)
+  }
 }
