@@ -151,4 +151,19 @@ class ForComprehesionSpec extends FunSuite{
 
     assert(Some(Success("whatever")) == result)
   }
+
+  test("left side of for are pattern matthing") {
+    val result1: Option[Person] = for{
+      Person("aa", _) <- Option(Person("aa", 11))
+      b <- Option(Person("bb", 22))
+    } yield b
+
+    val result2: Option[Person] = for{
+      Person("cc", _) <- Option(Person("aa", 11)) // pattern matching fails here, so it returns Nones
+      b <- Option(Person("bb", 22))
+    } yield b
+
+    assert(Some(Person("bb", 22)) == result1)
+    assert(None == result2)
+  }
 }
