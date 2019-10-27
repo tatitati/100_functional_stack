@@ -10,14 +10,14 @@ import scala.concurrent.duration._
 class ComposingFuturesSpec extends FunSuite {
 
   def fut1: Future[Int] = Future {
+//    println(Thread.currentThread().getName())
     Thread.sleep(5000)
-    println("fut1 here")
     5
   }
 
   def fut2(num: Int): Future[String] = Future {
+//    println(Thread.currentThread().getName())
     Thread.sleep(5000)
-    println("fut2 here")
     s"next number is " + (num+1)
   }
 

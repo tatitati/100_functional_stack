@@ -8,8 +8,7 @@ class ParallelCollectionsSpec extends FunSuite {
   test("parallel collections dont follow any order"){
     val numbers = List(1, 2, 3, 4, 5, 6, 7, 8)
 
-    val result = numbers.par.foreach{ println }
-    println(result)
+    //    val result = numbers.par.foreach{ println }
     //    3
     //    2
     //    4
@@ -29,7 +28,10 @@ class ParallelCollectionsSpec extends FunSuite {
 
   test("par.map dfasdfasdf") {
     val numbers = List(1, 2, 3, 4, 5, 6, 7, 8)
-    val result = numbers.par.map( _ * 10)
+    val result = numbers.par.map{ x =>
+      //println(Thread.currentThread().getName() + " is picking up the number: " + x)
+      x * 10
+    }
     assert(ParVector(10, 20, 30, 40, 50, 60, 70, 80) == result)
   }
 }
