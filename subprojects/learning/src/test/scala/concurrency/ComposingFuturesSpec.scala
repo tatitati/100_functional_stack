@@ -26,9 +26,9 @@ class ComposingFuturesSpec extends FunSuite {
       // println("Future: " + Thread.currentThread().getName())
       Thread.sleep(5000)
       1 + 1
-    }.map{
-      // println("Map 1: " + Thread.currentThread().getName())
-      num => num * 10
+    }.map{ num =>
+      // println("Map: " + Thread.currentThread().getName())
+      num * 10
     }
 
     val value: Int = Await.result(total, 15 seconds)
