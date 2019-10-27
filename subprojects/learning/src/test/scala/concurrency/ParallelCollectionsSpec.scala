@@ -2,6 +2,7 @@ package concurrency
 
 import org.scalatest.FunSuite
 
+import scala.collection.mutable.ArrayBuffer
 import scala.collection.parallel.immutable.ParVector
 
 class ParallelCollectionsSpec extends FunSuite {
@@ -29,7 +30,7 @@ class ParallelCollectionsSpec extends FunSuite {
   test("par.map dfasdfasdf") {
     val numbers = List(1, 2, 3, 4, 5, 6, 7, 8)
     val result = numbers.par.map{ x =>
-      //println(Thread.currentThread().getName() + " is picking up the number: " + x)
+      // println(Thread.currentThread().getName() + " is picking up the number: " + x)
       x * 10
     }
     assert(ParVector(10, 20, 30, 40, 50, 60, 70, 80) == result)

@@ -21,12 +21,19 @@ class ComposingFuturesSpec extends FunSuite {
     s"next number is " + (num+1)
   }
 
-  test("I can map over a future") {
-    val futureResult: Future[Int] = fut1.map{ num => num * 10}
+  test("These two threads are differents threads") {
+    val total = Future {
+      // println("Future: " + Thread.currentThread().getName())
+      Thread.sleep(5000)
+      1 + 1
+    }.map{
+      // println("Map 1: " + Thread.currentThread().getName())
+      num => num * 10
+    }
 
-    val value: Int = Await.result(futureResult, 15 seconds)
+    val value: Int = Await.result(total, 15 seconds)
 
-    assert(50 == value)
+    assert(25 == value)
   }
 
   test("Chaining futures: map create nested Futures, sometimes we have to wait of each nested, one by one"){
