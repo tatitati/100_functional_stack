@@ -6,6 +6,7 @@ import domain.pet.Pet
 import infrastructue.CustomDbConnection
 import doobie.implicits._
 import cats.implicits._
+import cats.data.Nested
 
 class RepositoryPet extends CustomDbConnection{
 
@@ -61,6 +62,20 @@ class RepositoryPet extends CustomDbConnection{
       .query[Int]
       .unique
       .transact(xa)
+  }
+
+  def list(): IO[List[Pet]] = {
+    val result: IO[List[PersistentPet]] = sql"""
+          select *
+          from pet
+        """
+      .query[PersistentPet]
+      .to[List]
+      .transact(xa)
+
+    val nested1: Nested[IO, List, PersistentPet] = Nested(result)
+
+    nested1.map(MapperPet.toDomain(_)).value
   }
 
   def updateAge(newage: Int, pet: Pet): IO[Unit] = ???

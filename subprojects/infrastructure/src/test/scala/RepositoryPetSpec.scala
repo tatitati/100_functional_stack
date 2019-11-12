@@ -7,6 +7,7 @@ import infrastructure.{MapperPet, PersistentPet, RepositoryPet}
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 import infrastructue.CustomDbConnection
 import doobie.implicits._
+import org.http4s.CharsetRange.*
 
 class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
 
@@ -42,6 +43,12 @@ class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache
   test(".count()") {
     val result:IO[Int] = repo.count()
     assert(2 == result.unsafeRunSync())
+  }
+
+  test(".list()"){
+    val pets: IO[List[Pet]] = repo.list()
+
+    println(pets.unsafeRunSync())
   }
 
 //

@@ -24,8 +24,8 @@ val thirdDependencies = Seq(
     "org.http4s"      %% "http4s-dsl"          % Http4sVersion,
 
     //  Cats
-    "org.typelevel" %% "cats-core" % "2.0.0-M4",
-    "org.typelevel" %% "cats-effect" % "1.3.1",
+    "org.typelevel" %% "cats-core" % "2.0.0",
+    "org.typelevel" %% "cats-effect" % "2.0.0",
 
     //  Refined
     "eu.timepit" %% "refined"                 % "0.9.10",
