@@ -73,9 +73,11 @@ class RepositoryPet extends CustomDbConnection{
       .to[List]
       .transact(xa)
 
-    val nested1: Nested[IO, List, PersistentPet] = Nested(result)
+    result.map(_.map(MapperPet.toDomain(_)))
 
-    nested1.map(MapperPet.toDomain(_)).value
+    // @TODO:
+    //val nested1: Nested[IO, List, PersistentPet] = Nested(result)
+    //nested1.map(MapperPet.toDomain(_)).value
   }
 
   def updateAge(newage: Int, pet: Pet): IO[Unit] = ???

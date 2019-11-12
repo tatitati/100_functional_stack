@@ -48,7 +48,9 @@ class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache
   test(".list()"){
     val pets: IO[List[Pet]] = repo.list()
 
-    println(pets.unsafeRunSync())
+    assert(
+      List(Pet(Some(1),"Bolt",17,172), Pet(Some(2),"Lassie",10,230))
+      == pets.unsafeRunSync())
   }
 
 //
