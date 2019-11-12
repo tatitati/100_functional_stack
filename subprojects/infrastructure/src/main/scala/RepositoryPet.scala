@@ -44,7 +44,7 @@ class RepositoryPet extends CustomDbConnection{
           from pet
           where name = ${name}
         """
-      .query[Pet]
+      .query[PersistentPet]
       .option
       .transact(xa)
       .map{
