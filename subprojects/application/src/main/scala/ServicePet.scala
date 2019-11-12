@@ -4,7 +4,7 @@ import cats.data._
 import cats.effect._
 import cats.implicits._
 import domain.pet.Pet
-import infrastructure.{PetDontExist, ErrorPetExist, RepositoryPet}
+import infrastructure.{ErrorPetDontExist, ErrorPetExist, RepositoryPet}
 
 class ServicePet(petRepository: RepositoryPet) {
 

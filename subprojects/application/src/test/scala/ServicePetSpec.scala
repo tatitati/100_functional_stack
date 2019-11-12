@@ -4,7 +4,7 @@ import application.ServicePet
 import cats.effect.IO
 import domain.order.OrderId
 import domain.pet.Pet
-import infrastructure.{PetDontExist, ErrorPetExist, RepositoryPet}
+import infrastructure.{ErrorPetDontExist, ErrorPetExist, RepositoryPet}
 import infrastructure.test.ResetCache
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 
