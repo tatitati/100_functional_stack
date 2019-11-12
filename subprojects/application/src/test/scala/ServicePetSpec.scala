@@ -16,26 +16,22 @@ class ServicePetSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
   override def afterEach() {
     val resetDb:IO[Int] = reset()
     resetDb.unsafeRunSync()
-    repository = repository
   }
 
   test("service.create()") {
     val programRight: IO[Either[ErrorPetExist.type, Unit]] = service.create(Pet(None, "toby" ,32, 32))
     val programLeft: IO[Either[ErrorPetExist.type, Unit]] = service.create(Pet(None, "Bolt" ,17, 433))
 
-    val resultRight = programRight.unsafeRunSync()
-    val resultLeft = programLeft.unsafeRunSync()
-
-    assert(Right(()) == resultRight, "Should be right")
-    assert(Left(ErrorPetExist) == resultLeft, "Should be left")
+    assert(Right(()) == programRight.unsafeRunSync(), "Should be right")
+    assert(Left(ErrorPetExist) == programLeft.unsafeRunSync(), "Should be left")
   }
 
   test("service.find()") {
-    val result1:IO[Option[Pet]] = service.find(Pet(Some(32), "nonexisting", 23, 100))
-    val result2:IO[Option[Pet]] = service.find(Pet(Some(43), "Bolt", 23, 100))
+    val resultNone:IO[Option[Pet]] = service.find(Pet(Some(32), "nonexisting", 23, 100))
+    val resultSome:IO[Option[Pet]] = service.find(Pet(Some(43), "Bolt", 23, 100))
 
-    assert(None === result1.unsafeRunSync(), "Should be None")
-    assert(Some(Pet(Some(1), "Bolt",17, 172)) === result2.unsafeRunSync(), "Should be Some(..)")
+    assert(None === resultNone.unsafeRunSync(), "Should be None")
+    assert(Some(Pet(Some(1), "Bolt",17, 172)) === resultSome.unsafeRunSync(), "Should be Some(..)")
   }
 
   test("service.update()") {

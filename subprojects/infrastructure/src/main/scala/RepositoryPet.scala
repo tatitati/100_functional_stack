@@ -53,12 +53,15 @@ class RepositoryPet extends CustomDbConnection{
     }
   }
 
-  def list(): IO[List[Pet]] = ???
-  //  {
-  //    IO{
-  //      cache.map(_._2).toList
-  //    }
-  //  }
+  def count(): IO[Int] = {
+    sql"""
+          select count(*)
+          from pet
+        """
+      .query[Int]
+      .unique
+      .transact(xa)
+  }
 
   def updateAge(newage: Int, pet: Pet): IO[Unit] = ???
 //  {

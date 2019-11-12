@@ -9,12 +9,12 @@ import infrastructure.{PetDontExist, ErrorPetExist, RepositoryPet}
 class ServicePet(petRepository: RepositoryPet) {
 
   def create(pet: Pet): IO[Either[ErrorPetExist.type, Unit]] = {
-    val exists: IO[Boolean] = petRepository.exist(pet.name)
-    val create: IO[Int] = petRepository.create(pet)
+    val existPet: IO[Boolean] = petRepository.exist(pet.name)
+    val createPet: IO[Int] = petRepository.create(pet)
 
-    exists.flatMap {
+    existPet.flatMap {
       case true => IO(ErrorPetExist.asLeft[Unit])
-      case false => create.map(_ => ().asRight[ErrorPetExist.type])
+      case false => createPet.map(_ => ().asRight[ErrorPetExist.type])
     }
   }
 
