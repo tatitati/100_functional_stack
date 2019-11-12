@@ -22,6 +22,10 @@ class ServicePet(petRepository: RepositoryPet) {
     petRepository.findByName(pet.name)
   }
 
+  def count(): IO[Int] = {
+    petRepository.count()
+  }
+
 //  def list: IO[List[Pet]] = {
 //    petRepository.list()
 //  }

@@ -18,7 +18,7 @@ class ServicePetSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
     resetDb.unsafeRunSync()
   }
 
-  test("service.create()") {
+  test(".create()") {
     val programRight: IO[Either[ErrorPetExist.type, Unit]] = service.create(Pet(None, "toby" ,32, 32))
     val programLeft: IO[Either[ErrorPetExist.type, Unit]] = service.create(Pet(None, "Bolt" ,17, 433))
 
@@ -26,7 +26,7 @@ class ServicePetSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
     assert(Left(ErrorPetExist) == programLeft.unsafeRunSync(), "Should be left")
   }
 
-  test("service.find()") {
+  test(".find()") {
     val resultNone:IO[Option[Pet]] = service.find(Pet(Some(32), "nonexisting", 23, 100))
     val resultSome:IO[Option[Pet]] = service.find(Pet(Some(43), "Bolt", 23, 100))
 
@@ -34,7 +34,11 @@ class ServicePetSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
     assert(Some(Pet(Some(1), "Bolt",17, 172)) === resultSome.unsafeRunSync(), "Should be Some(..)")
   }
 
-  test("service.update()") {
+  test(".count") {
+    assert(2 == service.count().unsafeRunSync())
+  }
+
+  test(".update()") {
 //    val service = new PetService(repository)
 //
 //    val update1:IO[Either[PetDontExist.type, Unit]] = service.update(666, Pet(OrderId("00001A"), "Bolt", 32, 300))
