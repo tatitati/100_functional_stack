@@ -17,13 +17,13 @@ class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache
     resetDb.unsafeRunSync()
   }
 
-  test("repo.create()"){
+  test(".create()"){
     val create: IO[Int] = repo.create(Pet(None, "colmillo_blanco", 8, 2))
 
     assert(1 == create.unsafeRunSync())
   }
 
-  test("repo.findByName()") {
+  test(".findByName()") {
     val findSome:IO[Option[Pet]] = repo.findByName("Bolt")
     val findNone:IO[Option[Pet]] = repo.findByName("No existing")
 
@@ -31,7 +31,7 @@ class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache
     assert(None == findNone.unsafeRunSync())
   }
 
-  test("repo.exist()") {
+  test(".exist()") {
     val exist1:IO[Boolean] = repo.exist("Bolt")
     val exist2:IO[Boolean] = repo.exist("wrrroongg")
 
@@ -39,7 +39,7 @@ class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache
     assert(false == exist2.unsafeRunSync())
   }
 
-  test("repo.count()") {
+  test(".count()") {
     val result:IO[Int] = repo.count()
     assert(2 == result.unsafeRunSync())
   }

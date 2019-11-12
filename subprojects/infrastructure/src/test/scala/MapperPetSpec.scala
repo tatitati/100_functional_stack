@@ -10,7 +10,7 @@ import org.scalatest.FunSuite
 
 class MapperPetSpec extends FunSuite {
 
-  test("MapperPet.toDomain()") {
+  test(".toDomain()") {
     val (seed, anyBuilderState) = BuilderPet.any().run(Seed(100)).value
 
     val createPet: State[BuilderState, Pet] = for{

@@ -51,7 +51,6 @@ class InsertUpdateSpec extends FunSuite with CustomDbConnection {
   test("Doobie: UPDATE"){
     case class Person(id: Long, name: String, age: Option[Short])
     val resultUpdate = sql"update person set age = 15 where name = 'Alice'".update.run.transact(xa).unsafeRunSync
-
     val resultSelect = sql"select id, name, age from person".query[Person].to[List].transact(xa).unsafeRunSync
 
     assert(1 == resultUpdate)
@@ -60,14 +59,15 @@ class InsertUpdateSpec extends FunSuite with CustomDbConnection {
 
   test("Doobie: RETRIEVING ID on INSERT"){
     case class Person(id: Long, name: String, age: Option[Short])
-    def insert2(name: String, age: Option[Short]): ConnectionIO[Person] =
+
+    def insert(name: String, age: Option[Short]): ConnectionIO[Person] =
       for {
         _  <- sql"insert into person (name, age) values ($name, $age)".update.run
         id <- sql"select lastval()".query[Long].unique
         p  <- sql"select id, name, age from person where id = $id".query[Person].unique
       } yield p
 
-    val ioResult: IO[Person] = insert2("jaime", Some(43)).transact(xa)
+    val ioResult: IO[Person] = insert("jaime", Some(43)).transact(xa)
     val personResult: Person = ioResult.unsafeRunSync
 
     assert(Person(2,"jaime",Some(43)) == personResult)
