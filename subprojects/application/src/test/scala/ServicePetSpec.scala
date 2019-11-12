@@ -4,7 +4,7 @@ import application.ServicePet
 import cats.effect.IO
 import domain.order.OrderId
 import domain.pet.Pet
-import infrastructure.{PetDontExist, PetExist, RepositoryPet}
+import infrastructure.{PetDontExist, ErrorPetExist, RepositoryPet}
 import infrastructure.test.ResetCache
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 
@@ -20,14 +20,14 @@ class ServicePetSpec extends FunSuite with BeforeAndAfterEach with ResetCache {
   }
 
   test("service.create()") {
-    val programRight: IO[Either[PetExist.type, Unit]] = service.create(Pet(None, "toby" ,32, 32))
-    val programLeft: IO[Either[PetExist.type, Unit]] = service.create(Pet(None, "Bolt" ,17, 433))
+    val programRight: IO[Either[ErrorPetExist.type, Unit]] = service.create(Pet(None, "toby" ,32, 32))
+    val programLeft: IO[Either[ErrorPetExist.type, Unit]] = service.create(Pet(None, "Bolt" ,17, 433))
 
     val resultRight = programRight.unsafeRunSync()
     val resultLeft = programLeft.unsafeRunSync()
 
     assert(Right(()) == resultRight, "Should be right")
-    assert(Left(PetExist) == resultLeft, "Should be left")
+    assert(Left(ErrorPetExist) == resultLeft, "Should be left")
   }
 
   test("service.find()") {

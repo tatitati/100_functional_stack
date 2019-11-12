@@ -4,20 +4,18 @@ import cats.data._
 import cats.effect._
 import cats.implicits._
 import domain.pet.Pet
-import infrastructure.{PetDontExist, PetExist, RepositoryPet}
+import infrastructure.{PetDontExist, ErrorPetExist, RepositoryPet}
 
 class ServicePet(petRepository: RepositoryPet) {
 
-  def create(pet: Pet): IO[Either[PetExist.type, Unit]] = {
+  def create(pet: Pet): IO[Either[ErrorPetExist.type, Unit]] = {
     val exists: IO[Boolean] = petRepository.exist(pet.name)
     val create: IO[Int] = petRepository.create(pet)
 
-    val run: IO[Either[PetExist.type, Unit]] = exists.flatMap {
-      case true => IO(PetExist.asLeft[Unit])
-      case false => create.map(_ => ().asRight[PetExist.type])
+    exists.flatMap {
+      case true => IO(ErrorPetExist.asLeft[Unit])
+      case false => create.map(_ => ().asRight[ErrorPetExist.type])
     }
-
-    run
   }
 
   def find(pet:Pet): IO[Option[Pet]] = {
