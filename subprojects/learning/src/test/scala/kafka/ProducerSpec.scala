@@ -9,7 +9,7 @@ import org.apache.kafka.clients.producer._
 
 class ProducerSpec extends FunSuite {
 
-  def send(msg: String, topic: String) = {
+  def send(msg: String, topic: String): Unit = {
     def getProducer(): KafkaProducer[String, String] = {
       val props = new Properties()
       props.put("bootstrap.servers", "localhost:9092")
@@ -24,7 +24,7 @@ class ProducerSpec extends FunSuite {
     producer.close()
   }
 
-  def receive(topic: String) = {
+  def receive(topic: String): Iterator[String] = {
     def getConsumer(): KafkaConsumer[String, String] = {
       val props = new Properties()
       props.put("bootstrap.servers", "localhost:9092")
