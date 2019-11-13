@@ -26,7 +26,10 @@ scalacOptions ++= Seq(
 )
 
 val thirdDependencies = Seq(
+    // circe
     "io.circe"        %% "circe-generic"       % CirceVersion,
+    "io.circe"        %% "circe-parser"        % CirceVersion,
+
     "org.specs2"      %% "specs2-core"         % Specs2Version % "test",
     "ch.qos.logback"  %  "logback-classic"     % LogbackVersion,
 
