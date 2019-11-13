@@ -52,8 +52,8 @@ class ProducerSpec extends FunSuite {
   }
 
   test("consumer"){
-    println("====================")
+    println("\n\n\n\n========ONE============")
     println(receive("test").foreach(println))
-    println("====================")
+    println("\n\n\n\n====================")
   }
 }

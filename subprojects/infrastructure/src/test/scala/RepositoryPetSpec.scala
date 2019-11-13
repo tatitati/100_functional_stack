@@ -54,7 +54,7 @@ class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache
   }
 
   test(".listStream()"){
-    val pets = repo.listStream()
+    //val pets = repo.listStream()
 
 
   }

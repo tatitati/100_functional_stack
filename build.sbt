@@ -37,7 +37,12 @@ val thirdDependencies = Seq(
     "org.tpolecat" %% "doobie-specs2"   % doobieVersion,
 
     // kafka
-    "org.apache.kafka" %% "kafka" % "2.1.0"
+    "org.apache.kafka" %% "kafka" % "2.1.0",
+
+    // log4j
+    "org.apache.logging.log4j" %% "log4j-api-scala" % "11.0",
+    "org.apache.logging.log4j" % "log4j-api" % "2.11.0",
+    "org.apache.logging.log4j" % "log4j-core" % "2.11.0" % Runtime
   )
 
 
