@@ -9,6 +9,21 @@ lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
 organization := "com.example"
 name := "server_functional"
 
+val commonsSettings = Seq(
+  version := "0.1.0-SNAPSHOT",
+  scalaVersion := "2.12.8"
+)
+
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-encoding", "UTF-8",
+  "-language:higherKinds",
+  "-language:postfixOps",
+  "-feature",
+  "-Ypartial-unification",
+  "-Xfatal-warnings",
+)
+
 val thirdDependencies = Seq(
     "io.circe"        %% "circe-generic"       % CirceVersion,
     "org.specs2"      %% "specs2-core"         % Specs2Version % "test",
@@ -42,24 +57,10 @@ val thirdDependencies = Seq(
     // log4j
     "org.apache.logging.log4j" %% "log4j-api-scala" % "11.0",
     "org.apache.logging.log4j" % "log4j-api" % "2.11.0",
-    "org.apache.logging.log4j" % "log4j-core" % "2.11.0" % Runtime
-  )
-
-
-val commonsSettings = Seq(
-  version := "0.1.0-SNAPSHOT",
-  scalaVersion := "2.12.8"
+    "org.apache.logging.log4j" % "log4j-core" % "2.11.0" % Runtime,
+    //("io.tryp" %% "splain" % "0.5.0" cross CrossVersion.patch).withConfigurations(Some("plugin->default(compile)"))
 )
 
-scalacOptions ++= Seq(
-  "-deprecation",
-  "-encoding", "UTF-8",
-  "-language:higherKinds",
-  "-language:postfixOps",
-  "-feature",
-  "-Ypartial-unification",
-  "-Xfatal-warnings",
-)
 
 lazy val domain = (project in file("subprojects/domain"))
   .settings(
@@ -107,5 +108,6 @@ lazy val root = (project in file("."))
     commonsSettings,
     libraryDependencies ++= thirdDependencies,
     addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.10.3"),
-    addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.0")
+    addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.0"),
+    //addCompilerPlugin("io.tryp" % "splain" % "0.5.0" cross CrossVersion.patch)
   )
