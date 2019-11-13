@@ -48,12 +48,34 @@ class ProducerSpec extends FunSuite {
   }
 
   test("producer"){
-    send("any msg", "test")
+    send(
+      """
+        |@@@@@@@@@@@@@@@@@@@@@@
+        |@@@@@@@@@@@@@@@@@@@@@@
+        |@@@@@@@@@@@@@@@@@@@@@@
+        |@@@@@@@@@@@@@@@@@@@@@@
+        |""".stripMargin, "test")
   }
 
   test("consumer"){
-    println("\n\n\n\n========ONE============")
     println(receive("test").foreach(println))
-    println("\n\n\n\n====================")
+  }
+
+  test("topics can be created on the fly"){
+    Thread.sleep(2000)
+    send(
+      """
+        |######################
+        |######################
+        |######################
+        |######################
+        |######################
+        |""".stripMargin, "my_new_topic")
+  }
+
+  test("topics can be created on the fly2"){
+    println("\n\n\n\n=================")
+    println(receive("my_new_topic").foreach(println))
+    println("\n\n\n\n=================")
   }
 }
