@@ -5,7 +5,10 @@ import shapeless._
 
 class ProductSpec extends FunSuite {
   case class IceCream(name: String, numCherries: Int, inCone: Boolean)
+
+
   val genericIceCream = Generic[IceCream]
+
 
   test("Product(case class) -> Generid Product"){
     val givenIceCream = IceCream("vanilla", 1, false)

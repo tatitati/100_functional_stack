@@ -22,6 +22,7 @@ scalacOptions ++= Seq(
   "-feature",
   "-Ypartial-unification",
   "-Xfatal-warnings",
+  //"-P:splain:all:true"
 )
 
 val thirdDependencies = Seq(
@@ -54,11 +55,11 @@ val thirdDependencies = Seq(
     // kafka
     "org.apache.kafka" %% "kafka" % "2.1.0",
 
-    // log4j
-    "org.apache.logging.log4j" %% "log4j-api-scala" % "11.0",
-    "org.apache.logging.log4j" % "log4j-api" % "2.11.0",
-    "org.apache.logging.log4j" % "log4j-core" % "2.11.0" % Runtime,
+    // splain
     //("io.tryp" %% "splain" % "0.5.0" cross CrossVersion.patch).withConfigurations(Some("plugin->default(compile)"))
+
+    "com.chuusai" %% "shapeless" % "2.3.3",
+    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
 
 
@@ -108,6 +109,6 @@ lazy val root = (project in file("."))
     commonsSettings,
     libraryDependencies ++= thirdDependencies,
     addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.10.3"),
-    addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.0"),
+    addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.0")
     //addCompilerPlugin("io.tryp" % "splain" % "0.5.0" cross CrossVersion.patch)
   )
