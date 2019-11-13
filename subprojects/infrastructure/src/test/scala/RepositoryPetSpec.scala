@@ -53,6 +53,12 @@ class RepositoryPetSpec extends FunSuite with BeforeAndAfterEach with ResetCache
       == pets.unsafeRunSync())
   }
 
+  test(".listStream()"){
+    val pets = repo.listStream()
+
+
+  }
+
 //
 //  test("repo.update()") {
 //    val result:IO[Unit] = repo.updateAge(55, Pet(OrderId("00002"), "Bolt", 17, 33))

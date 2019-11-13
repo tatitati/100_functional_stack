@@ -1,12 +1,11 @@
 package infrastructure
 
-import cats.data.OptionT
 import cats.effect.IO
 import domain.pet.Pet
 import infrastructue.CustomDbConnection
+import cats.data.Nested
 import doobie.implicits._
 import cats.implicits._
-import cats.data.Nested
 
 class RepositoryPet extends CustomDbConnection{
 
@@ -73,11 +72,10 @@ class RepositoryPet extends CustomDbConnection{
       .to[List]
       .transact(xa)
 
-    result.map(_.map(MapperPet.toDomain(_)))
+     // result.map(_.map(MapperPet.toDomain(_)))
 
-    // @TODO:
-    //val nested1: Nested[IO, List, PersistentPet] = Nested(result)
-    //nested1.map(MapperPet.toDomain(_)).value
+     val nested1: Nested[IO, List, PersistentPet] = Nested(result)
+     nested1.map(MapperPet.toDomain(_)).value
   }
 
   def updateAge(newage: Int, pet: Pet): IO[Unit] = ???

@@ -34,7 +34,10 @@ val thirdDependencies = Seq(
     //  Doobie
     "org.tpolecat" %% "doobie-core"     % doobieVersion,
     "org.tpolecat" %% "doobie-postgres" % doobieVersion,
-    "org.tpolecat" %% "doobie-specs2"   % doobieVersion
+    "org.tpolecat" %% "doobie-specs2"   % doobieVersion,
+
+    // kafka
+    "org.apache.kafka" %% "kafka" % "2.1.0"
   )
 
 
