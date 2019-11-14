@@ -4,8 +4,8 @@ import org.scalatest.FunSuite
 
 class ImplicitConversionSpec extends FunSuite {
 
-  case class FullUser(name: String, age: Int, gender: String)
   case class ShortUser(name: String)
+  case class FullUser(name: String, age: Int, gender: String)
 
   val full = FullUser(name="francisco", age=23, gender="male")
 

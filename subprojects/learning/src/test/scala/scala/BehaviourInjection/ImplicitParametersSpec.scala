@@ -28,7 +28,7 @@ class ImplicitParametersSpec extends FunSuite {
         override def toInfo(value: User): String = s"UserPrinter: ${value.name}, ${value.age}"
       }
 
-      // use case
+      // syntax (user interface)
       def printInfo[A](value: A)(implicit printer: InfoPrinter[A]): String = {
         printer.toInfo(value)
       }
