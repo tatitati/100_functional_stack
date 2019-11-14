@@ -16,6 +16,7 @@ class EncDecSpec extends FunSuite {
     import io.circe.parser.decode
 
     val dec = decode[List[Int]]("[1, 2, 3]")
+
     assert(Right(List(1, 2, 3)) == dec)
   }
 
