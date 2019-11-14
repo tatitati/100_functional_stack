@@ -27,7 +27,6 @@ class SemiAutoSpec extends FunSuite {
     import io.circe.generic.semiauto._
     import io.circe.parser.decode
 
-
     implicit val decIcecream: Decoder[IceCream] = deriveDecoder[IceCream]
     implicit val encIcecream: Encoder[IceCream] = deriveEncoder[IceCream]
 
