@@ -7,7 +7,7 @@ import io.circe.syntax._
 class SemiAutoSpec extends FunSuite {
   case class IceCream(name: String, size: Int)
 
-  test("semi automatic") {
+  test("semi automatic: encode") {
     import io.circe.generic.semiauto._
 
     implicit val decIcecream: Decoder[IceCream] = deriveDecoder[IceCream]
@@ -23,10 +23,29 @@ class SemiAutoSpec extends FunSuite {
 
   }
 
-  test("automatic"){
-    import io.circe.generic.auto._
+  test("semi automatic: decode") {
+    import io.circe.generic.semiauto._
+    import io.circe.parser.decode
+
+
+    implicit val decIcecream: Decoder[IceCream] = deriveDecoder[IceCream]
+    implicit val encIcecream: Encoder[IceCream] = deriveEncoder[IceCream]
 
     val encoded = IceCream("vanilla", 15).asJson
+    val dec = decode[IceCream](encoded.toString())
+
+    assert(Right(IceCream("vanilla",15)) == dec)
+
+  }
+
+  test("automatic: encode"){
+    import io.circe.generic.auto._
+    import io.circe.parser.decode
+
+    val encoded = IceCream("vanilla", 15).asJson
+    val dec = decode[IceCream](encoded.toString())
+
+    assert(Right(IceCream("vanilla",15)) == dec)
 
     //println(encoded)
     //{
