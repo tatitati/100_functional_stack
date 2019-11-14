@@ -9,7 +9,7 @@ class ImplicitConversionSpec extends FunSuite {
 
   val full = FullUser(name="francisco", age=23, gender="male")
 
-  test("displayName() argument is converted behind the scenes from Full to Short") {
+  test("CONVERTING ARGUMENTS: displayName() argument is converted behind the scenes from Full to Short") {
     implicit def full2Short(user: FullUser): ShortUser = {
       ShortUser(user.name)
     }
@@ -19,7 +19,7 @@ class ImplicitConversionSpec extends FunSuite {
     assert("francisco" == displayName(full))
   }
 
-  test("I inject a new method .greet() by converting the caller from String to Person") {
+  test("INJECTING METHODS:  .greet() by converting the caller from String to Person") {
     case class Person(name: String) {
       def greet(): String = s"Hello person: $name"
     }
@@ -29,7 +29,7 @@ class ImplicitConversionSpec extends FunSuite {
     assert("Hello person: Maria" === "Maria".greet())
   }
 
-  test("To avoid the intermediate converter we can use the shortcut") {
+  test("INJECTING METHODS-SHORTCUT: To avoid the intermediate converter we can use the shortcut") {
     implicit class StringToperson(str: String) {
       def greet(): String = s"Hello $str"
     }
