@@ -16,12 +16,8 @@ class CustomSpec extends FunSuite {
       )
     }
 
-    val a = IceCream("vanilla", 18).asJson
-    //println(a)
-    //{
-    //  "na_me" : "vanilla",
-    //  "si_ze" : 18
-    //}
+    val a = IceCream("vanilla", 18).asJson.noSpaces
+    assert("""{"na_me":"vanilla","si_ze":18}""" == a)
   }
 
   test("custom: decode"){
@@ -45,7 +41,7 @@ class CustomSpec extends FunSuite {
         |""".stripMargin
 
     val dec = decode[IceCream](a)
-    
+
     assert(Right(IceCream("vanilla",18)) == dec)
   }
 }

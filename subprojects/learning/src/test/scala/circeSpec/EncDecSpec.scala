@@ -8,15 +8,8 @@ class EncDecSpec extends FunSuite {
 
   test("Encode"){
     val intsJson: Json = List(1, 2, 3).asJson
-    //println(intsJson)
-    //  [
-    //    1,
-    //    2,
-    //    3
-    //  ]
 
-    val restored = intsJson.as[List[Int]]
-    assert(Right(List(1, 2, 3)) == restored)
+    assert("""[1,2,3]""" == intsJson.noSpaces)
   }
 
   test("decode"){
