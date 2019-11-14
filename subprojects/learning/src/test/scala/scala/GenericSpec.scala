@@ -4,13 +4,11 @@ import org.scalatest.FunSuite
 
 class GenericSpec extends FunSuite {
 
-    test("generic with _") {
-      def func1(a: List[_]): Int = {
-        a.size
-      }
+  test("generic with _ when I don't care about the type inside (existencial type)") {
+    def func1(a: List[_]): Int = a.size
 
-      assert(3 === func1(List("a", "b", "c")))
-    }
+    assert(3 === func1(List("a", "b", "c")))
+  }
 
   test("F as generic ") {
     case class MyOptions[F](name: Option[F], surname: Option[F])
