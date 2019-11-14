@@ -40,17 +40,22 @@ class SemiAutoSpec extends FunSuite {
 
   test("automatic: encode"){
     import io.circe.generic.auto._
+
+    val encoded = IceCream("vanilla", 15).asJson
+    //println(encoded)
+    //{
+    //  "name" : "vanilla",
+    //  "size" : 15
+    //}
+  }
+
+  test("automatic: decode"){
+    import io.circe.generic.auto._
     import io.circe.parser.decode
 
     val encoded = IceCream("vanilla", 15).asJson
     val dec = decode[IceCream](encoded.toString())
 
     assert(Right(IceCream("vanilla",15)) == dec)
-
-    //println(encoded)
-    //{
-    //  "name" : "vanilla",
-    //  "size" : 15
-    //}
   }
 }
