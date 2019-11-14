@@ -9,7 +9,7 @@ class ImplicitConversionSpec extends FunSuite {
 
   val full = FullUser(name="francisco", age=23, gender="male")
 
-  test("IMPLICIT CONVERSTION: Can convert an object into another when needed behind the scenes") {
+  test("displayName() argument is converted behind the scenes from Full to Short") {
     implicit def full2Short(user: FullUser): ShortUser = {
       ShortUser(user.name)
     }
@@ -19,43 +19,21 @@ class ImplicitConversionSpec extends FunSuite {
     assert("francisco" == displayName(full))
   }
 
-  test("RICH WRAPPER: Can add a new method to another class LIFTING OR WRAPPING") {
+  test("I inject a new method .greet() by converting the caller from String to Person") {
     case class Person(name: String) {
       def greet(): String = s"Hello person: $name"
     }
 
-    case class Counter(number: Int) {
-      def greet(): String = s"Hello number: $number"
-    }
-
     implicit def liftStringToperson(str: String): Person = Person(str)
-    implicit def liftIntToperson(number: Int): Counter = Counter(number)
 
     assert("Hello person: Maria" === "Maria".greet())
-    assert("Hello number: 5" === 5.greet())
   }
 
-  test("RICH WRAPPER: Can use a shourtcut to do the same") {
+  test("To avoid the intermediate converter we can use the shortcut") {
     implicit class StringToperson(str: String) {
       def greet(): String = s"Hello $str"
     }
 
     assert("Hello Maria" === "Maria".greet())
-  }
-
-  test("Same, more complete") {
-    trait ShowName {
-      def appendToName(sufix: String): String
-    }
-
-    implicit class full2Short(user: FullUser) extends ShowName {
-      def appendToName(sufix: String): String = "FULL: " + user.name + sufix
-    }
-
-    implicit class shortToFull(user: ShortUser) extends ShowName {
-      def appendToName(sufix: String): String = "SHORT: " + user.name + sufix
-    }
-
-    assert("FULL: francisco!!" == full.appendToName("!!"))
   }
 }
