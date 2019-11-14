@@ -15,5 +15,16 @@ class EncDecSpec extends FunSuite {
     //    3
     //  ]
 
+    val restored = intsJson.as[List[Int]]
+    assert(Right(List(1, 2, 3)) == restored)
   }
+
+  test("decode"){
+    import io.circe.parser.decode
+
+    val dec = decode[List[Int]]("[1, 2, 3]")
+    assert(Right(List(1, 2, 3)) == dec)
+  }
+
+
 }
