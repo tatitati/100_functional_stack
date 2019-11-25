@@ -22,20 +22,20 @@ class ProducerSpec extends FunSuite {
   }
 
   def send(msg: String, topic: String): Unit = {
-    val record = new ProducerRecord[String, String](topic, "key", msg)
     val producer = getProducer()
+    val record = new ProducerRecord[String, String](topic, "key", msg)
     val result: Future[RecordMetadata] = producer.send(record)
 
     println("\n\n\n\n\n")
     val response: RecordMetadata = result.get
-    println(response.offset())
+    println(response)
     println("\n\n\n\n\n")
+
     producer.close()
   }
 
   test("producer"){
     val mymessage = "This is a message sent to kafka"
-
     send(mymessage.stripMargin, topic)
   }
 }

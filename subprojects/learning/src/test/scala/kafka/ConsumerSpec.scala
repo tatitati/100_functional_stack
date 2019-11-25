@@ -34,7 +34,7 @@ class ConsumerSpec extends FunSuite {
     records
   }
 
-  test("producer"){
+  test("consumer"){
     val records = receive(topic)
     for(record <- records) {
       println("\n\n\n\n")
