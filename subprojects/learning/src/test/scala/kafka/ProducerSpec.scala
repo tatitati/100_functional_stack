@@ -1,13 +1,17 @@
 package kafka
 
+import java.time.Duration
 import org.scalatest.FunSuite
 import java.util
 import java.util.Properties
+import java.util.concurrent.Future
 import scala.collection.JavaConverters._
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.producer._
 
 class ProducerSpec extends FunSuite {
+
+  val topic = "mytopic"
 
   def getProducer(): KafkaProducer[String, String] = {
     val props = new Properties()
@@ -18,65 +22,20 @@ class ProducerSpec extends FunSuite {
   }
 
   def send(msg: String, topic: String): Unit = {
-
     val record = new ProducerRecord[String, String](topic, "key", msg)
     val producer = getProducer()
-    producer.send(record)
+    val result: Future[RecordMetadata] = producer.send(record)
+
+    println("\n\n\n\n\n")
+    val response: RecordMetadata = result.get
+    println(response.offset())
+    println("\n\n\n\n\n")
     producer.close()
   }
 
-  def getConsumer(): KafkaConsumer[String, String] = {
-    val props = new Properties()
-    props.put("bootstrap.servers", "localhost:9092")
-    props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put("auto.offset.reset", "latest")
-    props.put("group.id", "consumer-group")
-    val consumer: KafkaConsumer[String, String] = new KafkaConsumer[String, String](props)
-    consumer.subscribe(util.Arrays.asList("test"))
-    consumer
-  }
-
-  def receive(topic: String): Iterator[String] = {
-    val consumer = getConsumer()
-    val record = consumer.poll(1000).asScala
-    val datareceived  = for {
-      data <- record.iterator
-    } yield data.value()
-    consumer.close()
-
-    datareceived
-  }
-
   test("producer"){
-    send(
-      """
-        |@@@@@@@@@@@@@@@@@@@@@@
-        |@@@@@@@@@@@@@@@@@@@@@@
-        |@@@@@@@@@@@@@@@@@@@@@@
-        |@@@@@@@@@@@@@@@@@@@@@@
-        |""".stripMargin, "anotherone")
-  }
+    val mymessage = "This is a message sent to kafka"
 
-  //test("consumer"){
-  //  println(receive("test").foreach(println))
-  //}
-  //
-  //test("topics can be created on the fly"){
-  //  Thread.sleep(2000)
-  //  send(
-  //    """
-  //      |######################
-  //      |######################
-  //      |######################
-  //      |######################
-  //      |######################
-  //      |""".stripMargin, "my_new_topic")
-  //}
-  //
-  //test("topics can be created on the fly2"){
-  //  println("\n\n\n\n=================")
-  //  println(receive("my_new_topic").foreach(println))
-  //  println("\n\n\n\n=================")
-  //}
+    send(mymessage.stripMargin, topic)
+  }
 }

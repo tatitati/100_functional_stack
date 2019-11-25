@@ -42,26 +42,4 @@ class ConsumerSpec extends FunSuite {
       println("\n\n\n\n")
     }
   }
-
-  //test("consumer"){
-  //  println(receive("test").foreach(println))
-  //}
-  //
-  //test("topics can be created on the fly"){
-  //  Thread.sleep(2000)
-  //  send(
-  //    """
-  //      |######################
-  //      |######################
-  //      |######################
-  //      |######################
-  //      |######################
-  //      |""".stripMargin, "my_new_topic")
-  //}
-  //
-  //test("topics can be created on the fly2"){
-  //  println("\n\n\n\n=================")
-  //  println(receive("my_new_topic").foreach(println))
-  //  println("\n\n\n\n=================")
-  //}
 }
